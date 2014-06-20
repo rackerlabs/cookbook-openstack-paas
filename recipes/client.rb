@@ -1,7 +1,7 @@
 # encoding: UTF-8
 #
 # Cookbook Name:: openstack-paas
-# Recipe:: default
+# Recipe:: client
 #
 # Copyright 2014, Rackspace, Inc.
 #
@@ -17,3 +17,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+require 'uri'
+
+class Chef
+  class Recipe # rubocop:disable Documentation
+    include ::Openstack
+  end
+end
+
+include_recipe "openstack-paas::_client_#{node[:openstack][:paas][:git][:install_type]}"

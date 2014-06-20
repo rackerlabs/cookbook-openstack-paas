@@ -1,3 +1,89 @@
-# Solum config smashed down by Chef
+# <%= node[:openstack][:paas][:custom_template_banner] %>
 
-<%= write_solum_config(@solum_config) %>
+[DEFAULT]
+
+<%= write_solum_config('DEFAULT') %>
+
+<% if node[:openstack][:mq][:paas][:service_type] == 'rabbitmq' %>
+##### RABBITMQ #####
+rabbit_userid=<%= node[:openstack][:mq][:paas][:rabbit][:userid] %>
+rabbit_password=<%= @mq_password %>
+rabbit_virtual_host=<%= node[:openstack][:mq][:paas][:rabbit][:vhost] %>
+<% if node[:openstack][:mq][:paas][:rabbit][:ha] -%>
+rabbit_hosts=<%= @rabbit_hosts %>
+rabbit_ha_queues=True
+<% else -%>
+rabbit_host=<%= node[:openstack][:mq][:paas][:rabbit][:host] %>
+rabbit_port=<%= node[:openstack][:mq][:paas][:rabbit][:port] %>
+rabbit_use_ssl=<%= node[:openstack][:mq][:paas][:rabbit][:use_ssl] %>
+<% end -%>
+<% end -%>
+
+<% if node[:openstack][:mq][:paas][:service_type] == 'qpid' %>
+##### QPID #####
+qpid_hostname=<%= node[:openstack][:mq][:paas][:qpid][:host] %>
+qpid_port=<%= node[:openstack][:mq][:paas][:qpid][:port] %>
+qpid_password=<%= @mq_password %>
+qpid_username=<%= node[:openstack][:mq][:paas][:qpid][:username] %>
+qpid_sasl_mechanisms=<%= node[:openstack][:mq][:paas][:qpid][:sasl_mechanisms] %>
+qpid_reconnect_timeout=<%= node[:openstack][:mq][:paas][:qpid][:reconnect_timeout] %>
+qpid_reconnect_limit=<%= node[:openstack][:mq][:paas][:qpid][:reconnect_limit] %>
+qpid_reconnect_interval_min=<%= node[:openstack][:mq][:paas][:qpid][:reconnect_interval_min] %>
+qpid_reconnect_interval_max=<%= node[:openstack][:mq][:paas][:qpid][:reconnect_interval_max] %>
+qpid_reconnect_interval=<%= node[:openstack][:mq][:paas][:qpid][:reconnect_interval] %>
+qpid_heartbeat=<%= node[:openstack][:mq][:paas][:qpid][:heartbeat] %>
+# qpid protocol. default 'tcp'. set to 'ssl' to enable SSL
+qpid_protocol=<%= node[:openstack][:mq][:paas][:qpid][:protocol] %>
+qpid_tcp_nodelay=<%= node[:openstack][:mq][:paas][:qpid][:tcp_nodelay] %>
+qpid_topology_version=<%= [:openstack][:mq][:paas][:qpid][:topology_version] %>
+<% end %>
+
+[api]
+
+<%= write_solum_config('api') %>
+
+[database]
+
+<%= write_solum_config('database') %>
+
+connection=<%= @sql_connection %>
+
+[deployer]
+
+<%= write_solum_config('deployer') %>
+
+[glance_client]
+
+<%= write_solum_config('glance_client') %>
+
+[heat_client]
+
+<%= write_solum_config('heat_client') %>
+
+[keystone_authtoken]
+
+admin_password=<%= @service_pass %>
+admin_user=<%= node[:openstack][:paas][:service_user] %>
+admin_tenant_name=<%= node[:openstack][:paas][:service_tenant_name] %>
+auth_uri=<%= @auth_uri %>
+auth_protocol=<%= @identity_admin_endpoint.scheme %>
+auth_port=<%= @identity_admin_endpoint.port %>
+auth_host=<%= @identity_admin_endpoint.host %>
+
+<%= write_solum_config('keystone_authtoken') %>
+
+[matchmaker_ring]
+
+<%= write_solum_config('matchmaker_ring') %>
+
+[neutron_client]
+
+<%= write_solum_config('neutron_client') %>
+
+[swift_client]
+
+<%= write_solum_config('swift_client') %>
+
+[worker]
+
+<%= write_solum_config('worker') %>

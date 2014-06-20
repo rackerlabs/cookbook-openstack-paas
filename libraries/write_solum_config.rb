@@ -3,14 +3,10 @@
 module Extensions
   module Templates
     # An extension method for printing out the solum config file.
-    def write_solum_config(input = {})
+    def write_solum_config(section = '')
       config = ''
-      input.each do |section, content|
-        config << "[#{section}]\n"
-        content.each do |key, value|
-          config << "#{key}=#{value}\n"
-        end
-        config << "\n\n"
+      node[:openstack][:paas][:config][section].each do |key, value|
+        config << "#{key}=#{value}\n"
       end
       config
     end

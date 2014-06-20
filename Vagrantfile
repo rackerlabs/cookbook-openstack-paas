@@ -13,7 +13,11 @@ Vagrant.configure('2') do |config|
     }
 
     chef.run_list = [
-        'recipe[solum::default]'
+        'recipe[apt::default]',
+        'recipe[openstack-paas::server]',
+        'recipe[openstack-paas::identity_register]',
+        'recipe[openstack-paas::client]',
+        'recipe[openstack-common::openrc]'
     ]
   end
 end
