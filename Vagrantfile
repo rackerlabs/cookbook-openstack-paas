@@ -10,6 +10,12 @@ Vagrant.configure('2') do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.json = {
+      openstack: {
+        paas: {
+          runit_services: ['solum-api']
+        }
+      }
+      [:openstack][:paas][:runit_services]
     }
 
     chef.run_list = [

@@ -65,6 +65,7 @@ service_pass = get_password 'service', 'openstack-paas'
 auth_uri = auth_uri_transform identity_endpoint.to_s, node[:openstack][:paas][:api][:auth][:version]
 
 template '/etc/solum/solum.conf' do
+  source 'solum.conf.erb'
   user node[:openstack][:paas][:user]
   group node[:openstack][:paas][:group]
   mode '0600'

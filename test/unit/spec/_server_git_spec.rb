@@ -12,6 +12,7 @@ describe 'openstack-paas::_server_git' do
       runner.node.set[:openstack][:paas][:git][:install_dir] = '/opt/solum'
       runner.node.set[:openstack][:paas][:git][:repository] = 'https://github.com/stackforge/solum.git'
       runner.node.set[:openstack][:paas][:git][:revision] = 'master'
+      runner.node.set[:openstack][:paas][:runit_services] = ['solum-api']
       runner.converge(described_recipe)
     end
     include_context 'stubs-common'

@@ -63,12 +63,14 @@ directory '/etc/solum' do
   action [:create]
 end
 
-runit_service 'solum-api' do
-  default_logger true
-  options(
-    user: node[:openstack][:paas][:user],
-    group: node[:openstack][:paas][:group],
-    home: node[:openstack][:paas][:git][:install_dir]
-  )
-  action [:enable]
+node[:openstack][:paas][:git][:runit_services].each do |svc|
+  runit_service svc do
+    default_logger true
+    options(
+      user: node[:openstack][:paas][:user],
+      group: node[:openstack][:paas][:group],
+      home: node[:openstack][:paas][:git][:install_dir]
+    )
+    action [:enable]
+  end
 end

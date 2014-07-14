@@ -6,6 +6,7 @@ default[:openstack][:paas][:git][:install_type] = 'git'
 default[:openstack][:paas][:git][:install_dir] = '/opt/solum'
 default[:openstack][:paas][:git][:repository] = 'https://github.com/stackforge/solum.git'
 default[:openstack][:paas][:git][:revision] = 'master'
+default[:openstack][:paas][:git][:runit_services] = []
 
 default[:openstack][:paas][:client][:git][:install_dir] = '/opt/solumclient'
 default[:openstack][:paas][:client][:git][:repository] = 'https://github.com/stackforge/python-solumclient.git'
@@ -29,21 +30,26 @@ default[:openstack][:paas][:config] = {
   },
   api: {
     image_format: 'docker',
-    host: '0.0.0.0'
+    host: '127.0.0.1',
+    port: 9777
   },
   builder: {
-    host: '0.0.0.0'
+    host: '127.0.0.1',
+    port: 9778
   },
   conductor: {
-    topic: 'solum-conductor'
+    topic: 'solum-conductor',
+    host: '127.0.0.1'
   },
   deployer: {
     handler: 'heat',
-    topic: 'solum-deployer'
+    topic: 'solum-deployer',
+    host: '127.0.0.1'
   },
   worker: {
     handler: 'shell',
-    topic: 'solum-worker'
+    topic: 'solum-worker',
+    host: '127.0.0.1'
   },
   database: {},
   glance_client: {},

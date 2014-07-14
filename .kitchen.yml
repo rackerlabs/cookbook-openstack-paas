@@ -12,5 +12,14 @@ suites:
   - name: default
     run_list:
       - recipe[apt::default]
-      - recipe[solum::default]
+      - recipe[openstack-paas::server]
+      - recipe[openstack-paas::identity_register]
+      - recipe[openstack-paas::client]
+      - recipe[openstack-common::openrc]
     attributes:
+      openstack:
+        paas:
+          git:
+            runit_services: ['solum-api']
+      apache2:
+        default_site_enabled: false
