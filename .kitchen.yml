@@ -19,7 +19,6 @@ suites:
     attributes:
       openstack:
         paas:
-          git:
-            runit_services: ['solum-api']
+            services: ['solum-api']
       apache2:
         default_site_enabled: false

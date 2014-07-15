@@ -54,6 +54,13 @@ git node[:openstack][:paas][:git][:install_dir] do
   not_if { File.exist?("#{node[:openstack][:paas][:git][:install_dir]}/.git/config") }
 end
 
+directory node[:openstack][:paas][:config][:keystone_authtoken][:signing_dir] do
+  owner node[:openstack][:paas][:user]
+  group node[:openstack][:paas][:group]
+  mode '0700'
+  only_if { node[:openstack][:paas][:config][:keystone_authtoken][:signing_dir] }
+end
+
 python_pip node[:openstack][:paas][:git][:install_dir]
 
 directory '/etc/solum' do
@@ -63,7 +70,7 @@ directory '/etc/solum' do
   action [:create]
 end
 
-node[:openstack][:paas][:git][:runit_services].each do |svc|
+node[:openstack][:paas][:services].each do |svc|
   runit_service svc do
     default_logger true
     options(

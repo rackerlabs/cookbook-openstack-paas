@@ -79,6 +79,9 @@ template '/etc/solum/solum.conf' do
     auth_uri: auth_uri
   )
   action [:create]
+  node[:openstack][:paas][:services].each do |svc|
+    notifies :restart, "service[#{svc}]"
+  end
 end
 
 db_create_with_user(
