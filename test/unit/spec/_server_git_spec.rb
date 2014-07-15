@@ -9,10 +9,12 @@ describe 'openstack-paas::_server_git' do
       # runner.node.set['logstash'] ...
       runner.node.set[:openstack][:paas][:platform][:prereq_packages] = ['libffi-dev']
       runner.node.set[:openstack][:paas][:user] = 'solum'
+      runner.node.set[:openstack][:paas][:group] = 'solum'
       runner.node.set[:openstack][:paas][:git][:install_dir] = '/opt/solum'
       runner.node.set[:openstack][:paas][:git][:repository] = 'https://github.com/stackforge/solum.git'
       runner.node.set[:openstack][:paas][:git][:revision] = 'master'
-      runner.node.set[:openstack][:paas][:runit_services] = ['solum-api']
+      runner.node.set[:openstack][:paas][:services] = ['solum-api']
+      runner.node.set[:openstack][:paas][:config][:keystone_authtoken][:signing_dir] = '/var/cache/solum'
       runner.converge(described_recipe)
     end
     include_context 'stubs-common'
@@ -41,6 +43,14 @@ describe 'openstack-paas::_server_git' do
         repository: 'https://github.com/stackforge/solum.git',
         revision: 'master',
         destination: '/opt/solum'
+      )
+    end
+
+    it 'creates solum keystone signing directory' do
+      expect(chef_run).to create_directory('/var/cache/solum').with(
+        mode: '0700',
+        user: 'solum',
+        group: 'solum'
       )
     end
 

@@ -6,7 +6,6 @@ default[:openstack][:paas][:git][:install_type] = 'git'
 default[:openstack][:paas][:git][:install_dir] = '/opt/solum'
 default[:openstack][:paas][:git][:repository] = 'https://github.com/stackforge/solum.git'
 default[:openstack][:paas][:git][:revision] = 'master'
-default[:openstack][:paas][:git][:runit_services] = []
 
 default[:openstack][:paas][:client][:git][:install_dir] = '/opt/solumclient'
 default[:openstack][:paas][:client][:git][:repository] = 'https://github.com/stackforge/python-solumclient.git'
@@ -83,3 +82,5 @@ when 'debian'
     package_options: "-o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-confdef'"
   }
 end
+
+default[:openstack][:paas][:services] = []
