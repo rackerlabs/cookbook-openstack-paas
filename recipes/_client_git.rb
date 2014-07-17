@@ -53,6 +53,11 @@ end
 
 python_pip node[:openstack][:paas][:client][:git][:install_dir]
 
+# bugfix for kombu using bad package.
+python_pip 'librabbitmq' do
+  action :remove
+end
+
 directory '/etc/solum' do
   user node[:openstack][:paas][:user]
   group node[:openstack][:paas][:group]

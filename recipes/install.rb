@@ -1,7 +1,7 @@
 # encoding: UTF-8
 #
 # Cookbook Name:: openstack-paas
-# Recipe:: server
+# Recipe:: install
 #
 # Copyright 2014, Rackspace, Inc.
 #
@@ -42,7 +42,7 @@ unless db_type == 'sqlite'
   end
 end
 
-include_recipe "openstack-paas::_server_#{node[:openstack][:paas][:git][:install_type]}"
+include_recipe "openstack-paas::_install_#{node[:openstack][:paas][:git][:install_type]}"
 
 db_user = node[:openstack][:db][:paas][:username]
 db_pass = node[:openstack][:db][:paas][:password] || get_password('db', 'solum')
@@ -79,20 +79,4 @@ template '/etc/solum/solum.conf' do
     auth_uri: auth_uri
   )
   action [:create]
-  node[:openstack][:paas][:services].each do |svc|
-    notifies :restart, "service[#{svc}]"
-  end
-end
-
-db_create_with_user(
-  'paas',
-  node[:openstack][:db][:paas][:username],
-  get_password('db', 'solum')
-)
-
-execute 'solum-db-manage --config-file=/etc/solum/solum.conf upgrade head' do
-  user node[:openstack][:paas][:user]
-  group node[:openstack][:paas][:group]
-
-  only_if { node[:openstack][:db][:paas][:migrate] }
 end

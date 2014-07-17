@@ -69,7 +69,7 @@ openstack_identity_register "Grant 'admin' Role to Service User for Service Tena
 end
 
 # Register paas Service
-openstack_identity_register 'Register paas Service' do
+openstack_identity_register 'Register PAAS Service' do
   auth_uri auth_uri
   bootstrap_token bootstrap_token
   service_name 'solum'
@@ -79,8 +79,8 @@ openstack_identity_register 'Register paas Service' do
   action :create_service
 end
 
-# Register Compute Endpoint
-openstack_identity_register 'Register Compute Endpoint' do
+# Register PAAS Endpoint
+openstack_identity_register 'Register PAAS Endpoint' do
   auth_uri auth_uri
   bootstrap_token bootstrap_token
   service_type 'application_deployment'
@@ -90,4 +90,12 @@ openstack_identity_register 'Register Compute Endpoint' do
   endpoint_publicurl ::URI.decode paas_api_endpoint.to_s
 
   action :create_endpoint
+end
+
+# Create the solum_assembly_update role
+openstack_identity_register 'Create Role solum_assembly_update' do
+  auth_uri auth_uri
+  bootstrap_token bootstrap_token
+  role_name 'solum_assembly_update'
+  action :create_role
 end

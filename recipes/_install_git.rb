@@ -1,7 +1,7 @@
 # encoding: UTF-8
 #
 # Cookbook Name:: openstack-paas
-# Recipe:: _server_git
+# Recipe:: _install_git
 #
 # Copyright 2014, Rackspace, Inc.
 #
@@ -23,7 +23,6 @@ Erubis::Context.send(:include, Extensions::Templates)
 include_recipe 'git::default'
 include_recipe 'python::default'
 include_recipe 'build-essential::default'
-include_recipe 'runit::default'
 
 platform_options = node[:openstack][:paas][:platform]
 
@@ -63,21 +62,14 @@ end
 
 python_pip node[:openstack][:paas][:git][:install_dir]
 
+# bugfix for kombu using bad package.
+python_pip 'librabbitmq' do
+  action :remove
+end
+
 directory '/etc/solum' do
   user node[:openstack][:paas][:user]
   group node[:openstack][:paas][:group]
   mode '0700'
   action [:create]
-end
-
-node[:openstack][:paas][:services].each do |svc|
-  runit_service svc do
-    default_logger true
-    options(
-      user: node[:openstack][:paas][:user],
-      group: node[:openstack][:paas][:group],
-      home: node[:openstack][:paas][:git][:install_dir]
-    )
-    action [:enable]
-  end
 end

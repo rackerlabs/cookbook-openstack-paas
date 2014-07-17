@@ -1,7 +1,7 @@
 # Encoding: utf-8
 require_relative 'spec_helper'
 
-describe 'openstack-paas::_server_git' do
+describe 'openstack-paas::_install_git' do
   describe 'ubuntu' do
     let(:runner) { ChefSpec::Runner.new(::UBUNTU_OPTS) }
     let(:node) { runner.node }
@@ -13,7 +13,6 @@ describe 'openstack-paas::_server_git' do
       runner.node.set[:openstack][:paas][:git][:install_dir] = '/opt/solum'
       runner.node.set[:openstack][:paas][:git][:repository] = 'https://github.com/stackforge/solum.git'
       runner.node.set[:openstack][:paas][:git][:revision] = 'master'
-      runner.node.set[:openstack][:paas][:services] = ['solum-api']
       runner.node.set[:openstack][:paas][:config][:keystone_authtoken][:signing_dir] = '/var/cache/solum'
       runner.converge(described_recipe)
     end
@@ -23,7 +22,6 @@ describe 'openstack-paas::_server_git' do
       expect(chef_run).to include_recipe('git::default')
       expect(chef_run).to include_recipe('python::default')
       expect(chef_run).to include_recipe('build-essential::default')
-      expect(chef_run).to include_recipe('runit::default')
     end
 
     it 'installs pre-req packages' do
@@ -60,11 +58,6 @@ describe 'openstack-paas::_server_git' do
 
     it 'creates etsy solum directory' do
       expect(chef_run).to create_directory('/etc/solum')
-    end
-
-    it 'creates runit service for solum-api' do
-      skip 'LWRP matcher not available until runit cookbook 1.5.11'
-      # expect(chef_run).to enable_runit_service('solum-api')
     end
 
   end
