@@ -50,7 +50,7 @@ git node[:openstack][:paas][:git][:install_dir] do
   group       node[:openstack][:paas][:group]
   destination node[:openstack][:paas][:git][:install_dir]
   action     [:sync]
-  not_if { File.exist?("#{node[:openstack][:paas][:git][:install_dir]}/.git/config") }
+  not_if { File.exist?("#{node[:openstack][:paas][:git][:install_dir]}/README.rst") }
 end
 
 directory node[:openstack][:paas][:config][:keystone_authtoken][:signing_dir] do
