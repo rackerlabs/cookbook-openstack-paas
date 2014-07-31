@@ -48,7 +48,7 @@ git node[:openstack][:paas][:client][:git][:install_dir] do
   group       node[:openstack][:paas][:group]
   destination node[:openstack][:paas][:client][:git][:install_dir]
   action     [:sync]
-  not_if { File.exist?("#{node[:openstack][:paas][:client][:git][:install_dir]}/.git/config") }
+  not_if { File.exist?("#{node[:openstack][:paas][:client][:git][:install_dir]}/README.rst") }
 end
 
 python_pip node[:openstack][:paas][:client][:git][:install_dir]
