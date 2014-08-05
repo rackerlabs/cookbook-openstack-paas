@@ -20,7 +20,6 @@
 
 Erubis::Context.send(:include, Extensions::Templates)
 
-include_recipe 'git::default'
 include_recipe 'python::default'
 include_recipe 'build-essential::default'
 
@@ -33,33 +32,14 @@ platform_options[:prereq_packages].each do |pkg|
   end
 end
 
-user node[:openstack][:paas][:user] do
-  home node[:openstack][:paas][:git][:install_dir]
-end
+user node[:openstack][:paas][:user]
 
-directory "#{node[:openstack][:paas][:git][:install_dir]}/source" do
-  path         "#{node[:openstack][:paas][:git][:install_dir]}/source"
+directory node[:openstack][:paas][:git][:install_dir] do
+  path         node[:openstack][:paas][:git][:install_dir]
   owner        node[:openstack][:paas][:user]
   group        node[:openstack][:paas][:group]
   mode         '0755'
-  recursive    true
   action       [:create]
-end
-
-python_virtualenv node[:openstack][:paas][:git][:install_dir] do
-      owner node[:openstack][:paas][:user]
-      group node[:openstack][:paas][:group]
-      action :create
-end
-
-git "#{node[:openstack][:paas][:git][:install_dir]}/source" do
-  repository  node[:openstack][:paas][:git][:repository]
-  revision    node[:openstack][:paas][:git][:revision]
-  user        node[:openstack][:paas][:user]
-  group       node[:openstack][:paas][:group]
-  destination node[:openstack][:paas][:git][:install_dir]
-  action     [:sync]
-  not_if { File.exist?("#{node[:openstack][:paas][:git][:install_dir]}/source/README.rst") }
 end
 
 directory node[:openstack][:paas][:config][:keystone_authtoken][:signing_dir] do
@@ -69,20 +49,10 @@ directory node[:openstack][:paas][:config][:keystone_authtoken][:signing_dir] do
   only_if { node[:openstack][:paas][:config][:keystone_authtoken][:signing_dir] }
 end
 
-python_pip "#{node[:openstack][:paas][:git][:install_dir]}/source" do
-  virtualenv node[:openstack][:paas][:git][:install_dir]
-  user node[:openstack][:paas][:user]
-  group node[:openstack][:paas][:group]
-end
-
-# bugfix for kombu using bad package.
-python_pip 'MySQL-python' do
-  virtualenv node[:openstack][:paas][:git][:install_dir]
-end
+python_pip node[:openstack][:paas][:git][:install_dir]
 
 # bugfix for kombu using bad package.
 python_pip 'librabbitmq' do
-  virtualenv node[:openstack][:paas][:git][:install_dir]
   action :remove
 end
 
