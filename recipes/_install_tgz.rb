@@ -34,25 +34,23 @@ end
 
 user node[:openstack][:paas][:user]
 
-directory node[:openstack][:paas][:git][:install_dir] do
-  path         node[:openstack][:paas][:git][:install_dir]
+directory node[:openstack][:paas][:tgz][:install_dir] do
   owner        node[:openstack][:paas][:user]
   group        node[:openstack][:paas][:group]
   mode         '0755'
   action       [:create]
 end
 
-directory node[:openstack][:paas][:config][:keystone_authtoken][:signing_dir] do
-  owner node[:openstack][:paas][:user]
-  group node[:openstack][:paas][:group]
-  mode '0700'
-  only_if { node[:openstack][:paas][:config][:keystone_authtoken][:signing_dir] }
+libarchive_file 'solum_tgz' do
+  path node[:openstack][:paas][:tgz][:source_file]
+  extract_to node[:openstack][:paas][:tgz][:base_dir]
+  action [:extract]
+  not_if { File.exists?("#{node[:openstack][:paas][:tgz][:install_dir]}/bin/activate") }
 end
-
-python_pip node[:openstack][:paas][:git][:install_dir]
 
 # bugfix for kombu using bad package.
 python_pip 'librabbitmq' do
+  virtualenv node[:openstack][:paas][:tgz][:install_dir]
   action :remove
 end
 
@@ -61,4 +59,11 @@ directory '/etc/solum' do
   group node[:openstack][:paas][:group]
   mode '0700'
   action [:create]
+end
+
+directory node[:openstack][:paas][:config][:keystone_authtoken][:signing_dir] do
+  owner node[:openstack][:paas][:user]
+  group node[:openstack][:paas][:group]
+  mode '0700'
+  only_if { node[:openstack][:paas][:config][:keystone_authtoken][:signing_dir] }
 end

@@ -24,9 +24,8 @@ db_create_with_user(
   get_password('db', 'solum')
 )
 
-execute "#{node[:openstack][:paas][:git][:install_dir]}/bin/solum-db-manage --config-file=/etc/solum/solum.conf upgrade head" do
+execute "#{node[:openstack][:paas][:install_dir]}/bin/solum-db-manage --config-file=/etc/solum/solum.conf upgrade head" do
   user node[:openstack][:paas][:user]
   group node[:openstack][:paas][:group]
-
   only_if { node[:openstack][:db][:paas][:migrate] }
 end

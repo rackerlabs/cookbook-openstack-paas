@@ -42,7 +42,7 @@ unless db_type == 'sqlite'
   end
 end
 
-include_recipe "openstack-paas::_install_#{node[:openstack][:paas][:git][:install_type]}"
+include_recipe "openstack-paas::_install_#{node[:openstack][:paas][:install_type]}"
 
 db_user = node[:openstack][:db][:paas][:username]
 db_pass = node[:openstack][:db][:paas][:password] || get_password('db', 'solum')

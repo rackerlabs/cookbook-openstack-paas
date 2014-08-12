@@ -25,7 +25,7 @@ runit_service 'solum-conductor' do
   options(
     user: node[:openstack][:paas][:user],
     group: node[:openstack][:paas][:group],
-    home: node[:openstack][:paas][:git][:install_dir]
+    home: node[:openstack][:paas][:install_dir]
   )
   subscribes :restart, 'template[/etc/solum/solum.conf]'
   action [:enable]

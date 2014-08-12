@@ -75,7 +75,7 @@ python_pip "#{node[:openstack][:paas][:git][:install_dir]}/source" do
   group node[:openstack][:paas][:group]
 end
 
-# bugfix for kombu using bad package.
+# install mysql-python ... not sure why we have to do this ?
 python_pip 'MySQL-python' do
   virtualenv node[:openstack][:paas][:git][:install_dir]
 end

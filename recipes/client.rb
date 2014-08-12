@@ -26,4 +26,4 @@ class Chef
   end
 end
 
-include_recipe "openstack-paas::_client_#{node[:openstack][:paas][:git][:install_type]}"
+include_recipe "openstack-paas::_client_#{node[:openstack][:paas][:client][:install_type]}"
