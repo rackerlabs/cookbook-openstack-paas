@@ -10,7 +10,7 @@ default[:openstack][:paas][:git][:revision] = 'master'
 
 default[:openstack][:paas][:tgz][:base_dir] = '/opt'
 default[:openstack][:paas][:tgz][:install_dir] = "#{node[:openstack][:paas][:tgz][:base_dir]}/solum"
-default[:openstack][:paas][:tgz][:source_file] = "#{Chef::Config[:file_cache_path]}/solum-master.tar.gz"
+default[:openstack][:paas][:tgz][:source_file] = 'solum-master.tar.gz'
 
 default[:openstack][:paas][:install_dir] = node[:openstack][:paas][node[:openstack][:paas][:install_type]][:install_dir]
 
