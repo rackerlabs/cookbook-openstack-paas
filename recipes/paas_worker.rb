@@ -20,13 +20,16 @@
 
 include_recipe 'runit::default'
 
-runit_service 'solum-worker' do
-  default_logger true
-  options(
-    user: node[:openstack][:paas][:user],
-    group: node[:openstack][:paas][:group],
-    home: node[:openstack][:paas][:install_dir]
-  )
-  subscribes :restart, 'template[/etc/solum/solum.conf]'
-  action [:enable]
+for count in 1..node[:openstack][:paas][:number_of_workers] do
+  runit_service "solum-worker-#{count}" do
+    default_logger true
+    run_template_name 'solum-worker'
+    options(
+      user: node[:openstack][:paas][:user],
+      group: node[:openstack][:paas][:group],
+      home: node[:openstack][:paas][:install_dir]
+    )
+    subscribes :restart, 'template[/etc/solum/solum.conf]'
+    action [:enable]
+  end
 end

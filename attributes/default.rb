@@ -91,3 +91,5 @@ when 'debian'
 end
 
 default[:openstack][:paas][:services] = []
+
+default[:openstack][:paas][:number_of_workers] = 1
