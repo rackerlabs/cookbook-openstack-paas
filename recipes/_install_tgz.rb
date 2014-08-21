@@ -22,6 +22,7 @@ Erubis::Context.send(:include, Extensions::Templates)
 
 include_recipe 'python::default'
 include_recipe 'build-essential::default'
+include_recipe 'libarchive::default'
 
 platform_options = node[:openstack][:paas][:platform]
 
@@ -32,7 +33,9 @@ platform_options[:prereq_packages].each do |pkg|
   end
 end
 
-user node[:openstack][:paas][:user]
+user node[:openstack][:paas][:user] do
+
+end
 
 directory node[:openstack][:paas][:tgz][:install_dir] do
   owner        node[:openstack][:paas][:user]
