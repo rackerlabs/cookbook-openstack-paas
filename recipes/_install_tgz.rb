@@ -34,7 +34,8 @@ platform_options[:prereq_packages].each do |pkg|
 end
 
 user node[:openstack][:paas][:user] do
-
+  home node[:openstack][:paas][:tgz][:install_dir]
+  supports manage_home: true
 end
 
 directory node[:openstack][:paas][:tgz][:install_dir] do
