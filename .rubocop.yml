@@ -14,3 +14,6 @@ Style/Documentation:
 
 Style/LineLength:
   Enabled: false
+
+Style/For:
+  Enabled: false

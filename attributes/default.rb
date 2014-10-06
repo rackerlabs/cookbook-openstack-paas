@@ -3,7 +3,7 @@
 default[:openstack][:identity][:service_types] = %w(application_deployment image identity compute storage ec2 volume object-store metering network orchestration cloudformation database data-processing)
 
 default[:openstack][:paas][:install_type] = 'git'
-default[:openstack][:paas][:client][:install_type] = 'git'
+
 default[:openstack][:paas][:git][:install_dir] = '/opt/solum'
 default[:openstack][:paas][:git][:repository] = 'https://github.com/stackforge/solum.git'
 default[:openstack][:paas][:git][:revision] = 'master'
@@ -14,6 +14,7 @@ default[:openstack][:paas][:tgz][:source_file] = 'solum-master.tar.gz'
 
 default[:openstack][:paas][:install_dir] = node[:openstack][:paas][node[:openstack][:paas][:install_type]][:install_dir]
 
+default[:openstack][:paas][:client][:install_type] = 'git'
 default[:openstack][:paas][:client][:git][:install_dir] = '/opt/solumclient'
 default[:openstack][:paas][:client][:git][:repository] = 'https://github.com/stackforge/python-solumclient.git'
 default[:openstack][:paas][:client][:git][:revision] = 'master'
@@ -77,6 +78,7 @@ case platform_family
 when 'debian'
   default[:openstack][:paas][:user] = 'solum'
   default[:openstack][:paas][:group] = 'solum'
+  default[:openstack][:paas][:home] = '/usr/local/solum'
   default[:openstack][:paas][:platform] = {
     prereq_packages: ['libffi-dev'],
     mysql_python_packages: ['python-mysqldb'],

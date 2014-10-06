@@ -34,7 +34,7 @@ platform_options[:prereq_packages].each do |pkg|
 end
 
 user node[:openstack][:paas][:user] do
-  home node[:openstack][:paas][:git][:install_dir]
+  home node[:openstack][:paas][:home]
   supports manage_home: true
 end
 
@@ -47,20 +47,20 @@ directory "#{node[:openstack][:paas][:git][:install_dir]}/source" do
   action       [:create]
 end
 
-python_virtualenv node[:openstack][:paas][:git][:install_dir] do
-      owner node[:openstack][:paas][:user]
-      group node[:openstack][:paas][:group]
-      action :create
-end
-
 git "#{node[:openstack][:paas][:git][:install_dir]}/source" do
   repository  node[:openstack][:paas][:git][:repository]
   revision    node[:openstack][:paas][:git][:revision]
   user        node[:openstack][:paas][:user]
   group       node[:openstack][:paas][:group]
-  destination node[:openstack][:paas][:git][:install_dir]
+  destination "#{node[:openstack][:paas][:git][:install_dir]}/source"
   action     [:sync]
   not_if { File.exist?("#{node[:openstack][:paas][:git][:install_dir]}/source/README.rst") }
+end
+
+python_virtualenv node[:openstack][:paas][:git][:install_dir] do
+  owner node[:openstack][:paas][:user]
+  group node[:openstack][:paas][:group]
+  action :create
 end
 
 directory node[:openstack][:paas][:config][:keystone_authtoken][:signing_dir] do

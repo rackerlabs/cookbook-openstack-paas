@@ -49,7 +49,7 @@ libarchive_file 'solum_tgz' do
   path "#{Chef::Config[:file_cache_path]}/#{node[:openstack][:paas][:tgz][:source_file]}"
   extract_to node[:openstack][:paas][:tgz][:base_dir]
   action [:extract]
-  not_if { File.exists?("#{node[:openstack][:paas][:tgz][:install_dir]}/bin/activate") }
+  not_if { File.exist?("#{node[:openstack][:paas][:tgz][:install_dir]}/bin/activate") }
 end
 
 # bugfix for kombu using bad package.
