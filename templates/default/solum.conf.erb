@@ -60,6 +60,14 @@ connection=<%= @sql_connection %>
 
 <%= write_solum_config('heat_client') %>
 
+[barbican_client]
+
+<%= write_solum_config('barbican_client') %>
+
+[camp]
+
+<%= write_solum_config('camp') %>
+
 [keystone_authtoken]
 
 admin_password=<%= @service_pass %>
