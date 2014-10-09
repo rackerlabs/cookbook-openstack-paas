@@ -1,6 +1,6 @@
 #!/bin/sh
 exec 2>&1
 
-cd /<%= @options[:home] %>
+cd <%= @options[:home] %>
 . <%= @options[:home] %>/bin/activate
 exec chpst -u <%= @options[:user] %>:<%= @options[:group] %> <%= @options[:home]%>/bin/solum-conductor
