@@ -9,10 +9,10 @@ default[:openstack][:paas][:git][:repository] = 'https://github.com/stackforge/s
 default[:openstack][:paas][:git][:revision] = 'master'
 
 default[:openstack][:paas][:tgz][:base_dir] = '/opt'
-default[:openstack][:paas][:tgz][:install_dir] = "#{node[:openstack][:paas][:tgz][:base_dir]}/solum"
+default[:openstack][:paas][:tgz][:install_dir] = '/opt/solum'
 default[:openstack][:paas][:tgz][:source_file] = 'solum-master.tar.gz'
 
-default[:openstack][:paas][:install_dir] = node[:openstack][:paas][node[:openstack][:paas][:install_type]][:install_dir]
+default[:openstack][:paas][:install_dir] = '/opt/solum'
 
 default[:openstack][:paas][:client][:install_type] = 'git'
 default[:openstack][:paas][:client][:git][:install_dir] = '/opt/solumclient'

@@ -1,7 +1,7 @@
 # Encoding: utf-8
 require_relative 'spec_helper'
 
-describe 'openstack-paas::setup' do
+describe 'openstack-paas::db_migrate' do
   describe 'ubuntu' do
     let(:runner) { ChefSpec::Runner.new(::UBUNTU_OPTS) }
     let(:node) { runner.node }
@@ -12,8 +12,8 @@ describe 'openstack-paas::setup' do
     end
     include_context 'stubs-common'
 
-    it 'includes db_migrate recipe' do
-      expect(chef_run).to include_recipe('openstack-paas::db_migrate')
+    it 'runs db_migrate' do
+      expect(chef_run).to run_execute('solum-db-manage --config-file=/etc/solum/solum.conf upgrade head')
     end
 
   end

@@ -1,7 +1,7 @@
 # encoding: UTF-8
 #
 # Cookbook Name:: openstack-paas
-# Recipe:: setup
+# Recipe:: db_manage
 #
 # Copyright 2014, Rackspace, Inc.
 #
@@ -18,10 +18,8 @@
 # limitations under the License.
 #
 
-db_create_with_user(
-  'paas',
-  node[:openstack][:db][:paas][:username],
-  get_password('db', 'solum')
-)
-
-include_recipe 'openstack-paas::db_manage'
+execute "#{node[:openstack][:paas][:install_dir]}/bin/solum-db-manage --config-file=/etc/solum/solum.conf upgrade head" do
+  user node[:openstack][:paas][:user]
+  group node[:openstack][:paas][:group]
+  only_if { node[:openstack][:db][:paas][:migrate] }
+end
