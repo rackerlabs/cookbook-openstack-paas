@@ -34,6 +34,8 @@ end
 user node[:openstack][:paas][:user] do
   home node[:openstack][:paas][:home]
   supports manage_home: true
+  system true
+  action :create
 end
 
 directory node[:openstack][:paas][:client][:git][:install_dir] do
