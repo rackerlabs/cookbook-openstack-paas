@@ -33,13 +33,6 @@ platform_options[:prereq_packages].each do |pkg|
   end
 end
 
-user node[:openstack][:paas][:user] do
-  home node[:openstack][:paas][:tgz][:install_dir]
-  supports manage_home: true
-  system true
-  action :create
-end
-
 directory node[:openstack][:paas][:tgz][:install_dir] do
   owner        node[:openstack][:paas][:user]
   group        node[:openstack][:paas][:group]
