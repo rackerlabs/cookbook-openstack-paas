@@ -27,7 +27,7 @@ for count in 1..node[:openstack][:paas][:number_of_workers] do
     options(
       user: node[:openstack][:paas][:user],
       group: node[:openstack][:paas][:group],
-      home: node[:openstack][:paas][:install_dir]
+      home: node[:openstack][:paas][:run_dir]
     )
     subscribes :restart, 'template[/etc/solum/solum.conf]'
     action [:enable]

@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-execute "#{node[:openstack][:paas][:install_dir]}/bin/solum-db-manage --config-file=/etc/solum/solum.conf upgrade head" do
+execute "#{node[:openstack][:paas][:run_dir]}/bin/solum-db-manage --config-file=/etc/solum/solum.conf upgrade head" do
   user node[:openstack][:paas][:user]
   group node[:openstack][:paas][:group]
   only_if { node[:openstack][:db][:paas][:migrate] }

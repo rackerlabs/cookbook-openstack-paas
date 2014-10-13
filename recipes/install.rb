@@ -44,6 +44,11 @@ end
 
 include_recipe "openstack-paas::_install_#{node[:openstack][:paas][:install_type]}"
 
+link node[:openstack][:paas][:run_dir] do
+  to node[:openstack][:paas][:install_dir]
+  only_if { node[:openstack][:paas][:install_dir] != node[:openstack][:paas][:run_dir]}
+end
+
 db_user = node[:openstack][:db][:paas][:username]
 db_pass = node[:openstack][:db][:paas][:password] || get_password('db', 'solum')
 

@@ -13,6 +13,7 @@ default[:openstack][:paas][:tgz][:install_dir] = '/opt/solum'
 default[:openstack][:paas][:tgz][:source_file] = 'solum-master.tar.gz'
 
 default[:openstack][:paas][:install_dir] = '/opt/solum'
+default[:openstack][:paas][:run_dir] = '/opt/solum'
 
 default[:openstack][:paas][:client][:install_type] = 'git'
 default[:openstack][:paas][:client][:git][:install_dir] = '/opt/solumclient'
