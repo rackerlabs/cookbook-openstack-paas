@@ -65,7 +65,7 @@ end
 
 identity_endpoint = endpoint 'identity-api'
 identity_admin_endpoint = endpoint 'identity-admin'
-service_pass = get_password 'service', 'openstack-paas'
+service_pass = node[:openstack][:paas][:service_pass] || get_password('service', 'openstack-paas')
 
 auth_uri = auth_uri_transform identity_endpoint.to_s, node[:openstack][:paas][:api][:auth][:version]
 
