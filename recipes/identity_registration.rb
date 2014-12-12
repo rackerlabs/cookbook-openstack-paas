@@ -29,7 +29,7 @@ end
 identity_admin_endpoint = endpoint 'identity-admin'
 bootstrap_token = get_secret 'openstack_identity_bootstrap_token'
 auth_uri = ::URI.decode identity_admin_endpoint.to_s
-service_pass = get_password 'service', 'openstack-paas'
+service_pass = node[:openstack][:paas][:service_pass] || get_password('service', 'openstack-paas')
 service_user = node[:openstack][:paas][:service_user]
 service_role = node[:openstack][:paas][:service_role]
 service_tenant_name = node[:openstack][:paas][:service_tenant_name]
