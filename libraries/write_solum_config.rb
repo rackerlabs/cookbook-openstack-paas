@@ -7,7 +7,7 @@ module Extensions
       config = ''
       node[:openstack][:paas][:config][section].each do |key, value|
         config << "#{key}=#{value}\n"
-      end
+      end if node[:openstack][:paas][:config][section]
       config
     end
   end
