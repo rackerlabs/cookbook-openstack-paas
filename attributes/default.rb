@@ -96,3 +96,4 @@ end
 default[:openstack][:paas][:services] = []
 
 default[:openstack][:paas][:number_of_workers] = 1
+default[:openstack][:paas][:number_of_deployers] = 1
