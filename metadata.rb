@@ -5,7 +5,7 @@ maintainer_email 'paul.czarkowski@rackspace.com'
 license          'Apache2'
 description      'Installs/Configures Openstack Solum'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.2.14'
+version          '0.3.0'
 
 %w(apt git python build-essential runit libarchive).each do |dep|
   depends dep
