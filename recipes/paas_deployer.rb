@@ -20,13 +20,22 @@
 
 include_recipe 'runit::default'
 
+# Kill the old monolithic solum-deployer
 runit_service 'solum-deployer' do
-  default_logger true
-  options(
-    user: node[:openstack][:paas][:user],
-    group: node[:openstack][:paas][:group],
-    home: node[:openstack][:paas][:run_dir]
-  )
-  subscribes :restart, 'template[/etc/solum/solum.conf]'
-  action [:enable]
+  action [:disable]
+end
+
+# Stand up the multiple solum-deployers contingent on attribute
+for count in 1..node[:openstack][:paas][:number_of_deployers] do
+  runit_service "solum-deployer-#{count}" do
+    default_logger true
+    run_template_name 'solum-deployer'
+    options(
+      user: node[:openstack][:paas][:user],
+      group: node[:openstack][:paas][:group],
+      home: node[:openstack][:paas][:run_dir]
+    )
+    subscribes :restart, 'template[/etc/solum/solum.conf]'
+    action [:enable]
+  end
 end
