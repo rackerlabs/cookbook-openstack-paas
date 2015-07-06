@@ -95,3 +95,8 @@ auth_host=<%= @identity_admin_endpoint.host %>
 [worker]
 
 <%= write_solum_config('worker') %>
+<% if node[:openstack][:paas][:config][:worker][:operator_lp_download_strategy] == 'swift-client' %>
+lp_operator_user=<%= @lp_operator_user %>
+lp_operator_password=<%= @lp_operator_password %>
+lp_operator_tenant_name<%= @lp_operator_tenant_name %>
+<% end %>

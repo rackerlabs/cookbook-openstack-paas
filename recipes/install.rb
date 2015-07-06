@@ -66,6 +66,9 @@ end
 identity_endpoint = endpoint 'identity-api'
 identity_admin_endpoint = endpoint 'identity-admin'
 service_pass = node[:openstack][:paas][:service_pass] || get_password('service', 'openstack-paas')
+lp_operator_user = node[:openstack][:paas][:lp_operator_user]
+lp_operator_password = node[:openstack][:paas][:lp_operator_password] || get_password('service', node[:openstack][:paas][:lp_operator_user])
+lp_operator_tenant_name = node[:openstack][:paas][:lp_operator_tenant_name]
 
 auth_uri = auth_uri_transform identity_endpoint.to_s, node[:openstack][:paas][:api][:auth][:version]
 
@@ -81,7 +84,10 @@ template '/etc/solum/solum.conf' do
     identity_endpoint: identity_endpoint,
     identity_admin_endpoint: identity_admin_endpoint,
     service_pass: service_pass,
-    auth_uri: auth_uri
+    auth_uri: auth_uri,
+    lp_operator_user: lp_operator_user,
+    lp_operator_password: lp_operator_password,
+    lp_operator_tenant_name: lp_operator_tenant_name
   )
   action [:create]
 end
