@@ -50,7 +50,7 @@ default[:openstack][:paas][:config] = {
     host: '127.0.0.1'
   },
   deployer: {
-    handler: 'heat',
+    handler: 'carina',
     topic: 'solum-deployer',
     host: '127.0.0.1'
   },
