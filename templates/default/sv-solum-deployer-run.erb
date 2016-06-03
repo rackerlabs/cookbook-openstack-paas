@@ -3,4 +3,4 @@ exec 2>&1
 
 cd <%= @options[:home] %>
 . <%= @options[:home] %>/bin/activate
-exec chpst -u <%= @options[:user] %>:<%= @options[:group] %> env HOME=<%= default[:openstack][:paas][:home] %> <%= @options[:home]%>/bin/solum-deployer
+exec chpst -u <%= @options[:user] %>:<%= @options[:group] %> env HOME=<%= @default[:openstack][:paas][:home] %> <%= @options[:home]%>/bin/solum-deployer
