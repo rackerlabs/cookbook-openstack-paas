@@ -33,7 +33,8 @@ for count in 1..node[:openstack][:paas][:number_of_deployers] do
     options(
       user: node[:openstack][:paas][:user],
       group: node[:openstack][:paas][:group],
-      home: node[:openstack][:paas][:run_dir]
+      home: node[:openstack][:paas][:run_dir],
+      homedir: node[:openstack][:paas][:home]
     )
     subscribes :restart, 'template[/etc/solum/solum.conf]'
     action [:enable]
